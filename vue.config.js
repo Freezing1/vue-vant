@@ -29,7 +29,8 @@ module.exports = {
   // 生产环境关闭 source map
   productionSourceMap: false,
 
-  // lintOnSave: true,
+  //eslint开关
+  lintOnSave: false,
 
   // 配置css
   css: {
@@ -106,7 +107,7 @@ module.exports = {
     host: '0.0.0.0',
     port: 8088, // 端口号
     https: false, // https:{type:Boolean}
-    open: false, // 配置自动启动浏览器  open: 'Google Chrome'-默认启动谷歌
+    open: 'Google Chrome', // 配置自动启动浏览器  open: 'Google Chrome'-默认启动谷歌
 
     // 配置多个代理
     proxy: {

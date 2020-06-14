@@ -12,11 +12,15 @@ import toast from './components/toast'
 import './JS/plugin'
 import './JS/FastClick'
 import utils from './JS/utils'
+import filters from './filters'
 import VueScroller from 'vue-scroller'
 import { get, post } from './JS/ajax'
 
 Vue.use(VueScroller)
 Vue.use(utils)
+Object.keys(filters).forEach(key => {
+    Vue.filter(key,filters[key])
+})
 
 Vue.prototype.$dialog = Dialog
 Vue.prototype.$loading = Loading

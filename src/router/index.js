@@ -3,24 +3,33 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'home',
     component: () => import('../views/Home.vue'),
-    meta: { title: '首页', keepAlive: false }
+    meta: {
+      title: '首页',
+      keepAlive: false,
+      auth: false
+    }
   },
   {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue'),
-    meta: { title: '其他', keepAlive: false }
+    meta: {
+      title: '其他',
+      keepAlive: false,
+      auth: false
+    }
   }
 ]
 
 const router = new VueRouter({
   routes,
-  scrollBehavior: () => ({ y: 0 })
+  scrollBehavior: () => ({
+    y: 0
+  })
 })
 
 export default router
