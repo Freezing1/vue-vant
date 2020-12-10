@@ -31,6 +31,10 @@ export default {
           return 'pc'
         }
       },
+      // 校验外部链接
+      isExternal (path) {
+        return /^(https?:|mailto:|tel:)/.test(path)
+      },
       // 校验手机号码
       isPhone (val) {
         var patrn = /^(((1[3456789][0-9]{1})|(15[0-9]{1}))+\d{8})$/

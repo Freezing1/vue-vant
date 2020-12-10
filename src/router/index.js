@@ -1,35 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import router from './routers'
+
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css'// progress bar style
 
 Vue.use(VueRouter)
 
-const routes = [{
-    path: '/',
-    name: 'home',
-    component: () => import('../views/Home.vue'),
-    meta: {
-      title: '首页',
-      keepAlive: false,
-      auth: false
-    }
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
-    meta: {
-      title: '其他',
-      keepAlive: false,
-      auth: false
-    }
-  }
-]
+NProgress.configure({ showSpinner: false })// NProgress Configuration
 
-const router = new VueRouter({
-  routes,
-  scrollBehavior: () => ({
-    y: 0
-  })
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  document.title = to.meta.title
+  const userInfo = sessionStorage.getItem('userInfo') || null
+  if (!userInfo && to.meta.auth) {
+    next('/login')
+  } else {
+    next()
+  }
 })
+
+router.afterEach(() => {
+  NProgress.done() // finish progress bar
+})
+
 
 export default router

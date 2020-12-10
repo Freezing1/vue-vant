@@ -54,10 +54,10 @@
   <div>
     <transition name="fade">
       <div class="little-tip" v-show="showLittleTip">
-        <img src="../../../assets/images/success.png" alt="" width="36" v-if="type=='success'">
-        <img src="../../../assets/images/fail.png" alt="" width="36" v-if="type=='fail'">
-        <img src="../../../assets/images/warning.png" alt="" width="36" v-if="type=='warning'">
-        <img src="../../../assets/images/loading.png" alt="" width="36" v-if="type=='loading'" class="loading">
+        <img src="@/assets/images/success.png" alt="" width="36" v-if="type=='success'">
+        <img src="@/assets/images/fail.png" alt="" width="36" v-if="type=='fail'">
+        <img src="@/assets/images/warning.png" alt="" width="36" v-if="type=='warning'">
+        <img src="@/assets/images/loading.png" alt="" width="36" v-if="type=='loading'" class="loading">
         <span>{{msg}}</span>
       </div>
     </transition>

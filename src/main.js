@@ -11,15 +11,23 @@ import toast from './components/toast'
 
 import './JS/plugin'
 import './JS/FastClick'
+import './JS/vconsole'
 import utils from './JS/utils'
 import filters from './filters'
 import VueScroller from 'vue-scroller'
 import { get, post } from './JS/ajax'
+import { Button, Grid, GridItem } from 'vant'
+
+import './assets/icons' // icon
+
 
 Vue.use(VueScroller)
 Vue.use(utils)
+Vue.use(Button).use(Grid).use(GridItem)
+
+// this.util.
 Object.keys(filters).forEach(key => {
-    Vue.filter(key,filters[key])
+  Vue.filter(key, filters[key])
 })
 
 Vue.prototype.$dialog = Dialog
@@ -29,15 +37,7 @@ Vue.prototype.$http = { get, post }
 
 Vue.config.productionTip = false
 
-router.beforeEach((to, from, next) => {
-  document.title = to.meta.title
-  const userInfo = sessionStorage.getItem('userInfo') || null
-  if (!userInfo && to.meta.auth) {
-    next('/login')
-  } else {
-    next()
-  }
-})
+
 
 export default new Vue({
   el: '#app',

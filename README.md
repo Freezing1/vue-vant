@@ -238,6 +238,7 @@ Vue.use(utils)
 - 校验手机号码
 - 检验车牌号
 - 校验车架号
+- 是否外链
 - 检验身份证号码
 - 日期格式化
 - 时间格式化
@@ -690,7 +691,112 @@ configureWebpack: (config) => {
   }
 }
 ```
+## 页面载入进度条
+使用 nprogress 对路由跳转时做一个伪进度条，这样做在网络不好的情况下可以让用户知道页面已经在加载了：
+``` js
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css'// progress bar style
+//去除loading
+NProgress.configure({ showSpinner: false })// NProgress Configuration
 
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+})
+
+router.afterEach(() => {
+  NProgress.done() // finish progress bar
+})
+```
+## svg自动注册
+在日常的开发中，总是会有着大量的图标需要使用，这里我们直接选择使用 SVG 图标。但是如果每次使用图标还需要通过路径找到这张图标岂不是很麻烦，这里采用直接name等于文件名方式，支持外链方式引入，并且最终打包成一张雪碧图，首先是webpack配置:
+```js
+ chainWebpack: config => {
+    // 注册svg
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/assets/icons'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/assets/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
+ }
+```
+全局SvgIcon组件：
+```js
+<template>
+  <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
+  <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
+    <use :href="iconName" />
+  </svg>
+</template>
+
+<script>
+export default {
+  name: 'SvgIcon',
+  props: {
+    iconClass: {
+      type: String,
+      required: true
+    },
+    className: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    isExternal () {
+      return this.util.isExternal(this.iconClass)
+    },
+    iconName () {
+      return `#icon-${this.iconClass}`
+    },
+    svgClass () {
+      if (this.className) {
+        return 'svg-icon ' + this.className
+      } else {
+        return 'svg-icon'
+      }
+    },
+    styleExternalIcon () {
+      return {
+        mask: `url(${this.iconClass}) no-repeat 50% 50%`,
+        '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.svg-external-icon {
+  background-color: currentColor;
+  mask-size: cover!important;
+  display: inline-block;
+}
+</style>
+
+```
+
+使用方式：
+```js
+<svg-icon :icon-class="name" style="height: 40px;width: 20px;" />
+```
 ## 首页添加骨架屏
 
 随着 SPA 在前端界的逐渐流行，单页面应用不可避免地给首页加载带来压力，此时良好的首页用户体验至关重要。很多 APP 采用了“骨架屏”的方式去展示未加载内容，给予了用户焕然一新的体验。

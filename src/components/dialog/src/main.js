@@ -9,7 +9,7 @@ const Dialog = function (options) {
   instance = new DialogConstructor({
     data: options
   })
-  instance.vm = instance.$mount()
+  instance.vm = instance.$mount() // 挂载但是并未插入dom
   document.body.appendChild(instance.vm.$el)
   return instance.vm
 }
