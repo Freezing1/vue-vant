@@ -32,6 +32,16 @@ const constantRouterMap = [{
       keepAlive: false,
       auth: false
     }
+  },
+  {
+    path: '/loan',
+    name: 'Loan',
+    component: () => import('@/views/Loan.vue'),
+    meta: {
+      title: 'Loan',
+      keepAlive: false,
+      auth: false
+    }
   }
   ]
   

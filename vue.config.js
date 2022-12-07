@@ -9,7 +9,7 @@ function resolve (dir) {
 }
 module.exports = {
 
-  publicPath: './',
+  publicPath: '/vue-vant/',
 
   // 将构建好的文件输出到哪里
   outputDir: 'dist/static',

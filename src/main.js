@@ -16,14 +16,14 @@ import utils from './JS/utils'
 import filters from './filters'
 import VueScroller from 'vue-scroller'
 import { get, post } from './JS/ajax'
-import { Button, Grid, GridItem } from 'vant'
+import { Button, Grid, GridItem, Field, Cell, CellGroup, RadioGroup, Radio} from 'vant'
 
 import './assets/icons' // icon
 
 
 Vue.use(VueScroller)
 Vue.use(utils)
-Vue.use(Button).use(Grid).use(GridItem)
+Vue.use(Button).use(Grid).use(GridItem).use(Field).use(Cell).use(CellGroup).use(RadioGroup).use(Radio)
 
 // this.util.
 Object.keys(filters).forEach(key => {
