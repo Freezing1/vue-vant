@@ -12,7 +12,7 @@ module.exports = {
   publicPath: '/vue-vant/',
 
   // 将构建好的文件输出到哪里
-  outputDir: 'dist/static',
+  outputDir: 'dist/',
 
   // 放置生成的静态资源(js、css、img、fonts)的目录。
   assetsDir: 'static',
